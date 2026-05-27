@@ -12,6 +12,7 @@ interface Product {
   name: string
   price: number
   eventType: string
+  imageUrl: string
 }
 
 function App() {
@@ -75,10 +76,20 @@ function App() {
       <div style={{ width: '300px', overflowY: 'auto', padding: '16px' }}>
         <h2>행사 상품 ({products.length}개)</h2>
         {products.map(product => (
-          <div key={product.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0' }}>
-            <div style={{ fontWeight: 'bold' }}>{product.name}</div>
-            <div>{product.price.toLocaleString()}원</div>
-            <div style={{ color: 'red' }}>{product.eventType}</div>
+          <div key={product.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0', display: 'flex', gap: '12px' }}>
+            {product.imageUrl && (
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                style={{ width: '80px', height: '80px', objectFit: 'contain', flexShrink: 0 }}
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+              />
+            )}
+            <div>
+              <div style={{ fontWeight: 'bold' }}>{product.name}</div>
+              <div>{product.price.toLocaleString()}원</div>
+              <div style={{ color: 'red' }}>{product.eventType}</div>
+            </div>
           </div>
         ))}
       </div>

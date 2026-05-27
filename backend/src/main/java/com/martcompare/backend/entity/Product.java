@@ -20,4 +20,7 @@ public class Product {
 
     @Column(name = "event_type")
     private String eventType;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 }

@@ -2,7 +2,7 @@ import pymysql
 import pandas as pd
 
 # CSV 파일 읽기
-df = pd.read_csv("C:\\projects\\mart-crawler\\cu_products.csv")
+df = pd.read_csv("cu_products.csv")
 print(f"CSV 데이터 {len(df)}개 로딩 완료!")
 print(df.head())
 
@@ -19,8 +19,8 @@ cursor = conn.cursor()
 
 # 데이터 삽입
 insert_sql = """
-    INSERT INTO product (mart_id, name, price, event_type)
-    VALUES (%s, %s, %s, %s)
+    INSERT INTO product (mart_id, name, price, event_type, image_url)
+    VALUES (%s, %s, %s, %s, %s)
 """
 
 count = 0
@@ -32,7 +32,8 @@ for _, row in df.iterrows():
         1,              # mart_id (CU = 1)
         row["상품명"],
         price,
-        row["행사종류"]
+        row["행사종류"],
+        row.get("이미지URL", "")
     ))
     count += 1
 

@@ -26,9 +26,13 @@ create table product (
     name varchar(100) not null comment '상품명', 
     price int not null comment '가격', 
     event_type varchar(10) not null comment '1+1 or 2+1', 
+    image_url varchar(500) comment '이미지 URL', 
     primary key (id), 
     foreign key (mart_id) references mart (id)
 );
+
+-- image_url 컬럼 추가 (기존 테이블이 있는 경우)
+alter table product add column image_url varchar(500) comment '이미지 URL';
 
 -- CSV 데이터 DB에 넣기 전에 '편의점 기본 데이터(mart 테이블)를 먼저 넣기
 use mart_compare;
