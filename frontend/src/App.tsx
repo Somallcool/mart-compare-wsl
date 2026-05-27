@@ -15,9 +15,12 @@ interface Product {
   imageUrl: string
 }
 
+type Tab = 'all' | '1+1' | '2+1'
+
 function App() {
   const mapRef = useRef<HTMLDivElement>(null)
   const [products, setProducts] = useState<Product[]>([])
+  const [activeTab, setActiveTab] = useState<Tab>('all')
 
   // Spring Boot API 호출
   useEffect(() => {
@@ -67,6 +70,10 @@ function App() {
     }
   }, [])
 
+  const filtered = activeTab === 'all'
+    ? products
+    : products.filter(p => p.eventType === activeTab)
+
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* 지도 영역 */}
@@ -74,8 +81,27 @@ function App() {
 
       {/* 상품 리스트 영역 */}
       <div style={{ width: '300px', overflowY: 'auto', padding: '16px' }}>
-        <h2>행사 상품 ({products.length}개)</h2>
-        {products.map(product => (
+        <h2>행사 상품 ({filtered.length}개)</h2>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+          {(['all', '1+1', '2+1'] as Tab[]).map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              style={{
+                flex: 1,
+                padding: '8px',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: activeTab === tab ? 'bold' : 'normal',
+                backgroundColor: activeTab === tab ? '#ffeb3b' : '#fff',
+              }}
+            >
+              {tab === 'all' ? '전체' : tab}
+            </button>
+          ))}
+        </div>
+        {filtered.map(product => (
           <div key={product.id} style={{ borderBottom: '1px solid #eee', padding: '8px 0', display: 'flex', gap: '12px' }}>
             {product.imageUrl && (
               <img
