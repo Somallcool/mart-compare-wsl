@@ -1,0 +1,7 @@
+use mart_compare;
+
+ALTER TABLE product ADD COLUMN stock INT NOT NULL DEFAULT 0;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE product SET stock = FLOOR(3 + RAND() * 48);
+SET SQL_SAFE_UPDATES = 1;

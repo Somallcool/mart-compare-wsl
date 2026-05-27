@@ -2,8 +2,10 @@ package com.martcompare.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "product")
 public class Product {
@@ -23,4 +25,6 @@ public class Product {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    private Integer stock;
 }
